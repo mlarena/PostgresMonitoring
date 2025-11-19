@@ -71,3 +71,5 @@ sudo -u postgres psql -c "SHOW ALL;"
 
 Чтобы прочитать только те параметры в файле /etc/postgresql/18/main/postgresql.conf, которые начинаются на log_
 sudo grep -E '^[\s]*log_' /etc/postgresql/18/main/postgresql.conf
+sudo grep -E '^[\s]*track_' /etc/postgresql/18/main/postgresql.conf
+

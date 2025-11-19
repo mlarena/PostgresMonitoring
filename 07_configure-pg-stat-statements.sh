@@ -28,23 +28,13 @@ cat > $STATS_CONF_FILE << 'EOF'
 # ОБЯЗАТЕЛЬНАЯ НАСТРОККА - загружает расширение при старте сервера
 shared_preload_libraries = 'pg_stat_statements'
 
-# МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОТСЛЕЖИВАЕМЫХ ЗАПРОСОВ
-pg_stat_statements.max = 10000
 
-# КАКИЕ ЗАПРОСЫ ОТСЛЕЖИВАТЬ (top | all | none)
-pg_stat_statements.track = all
-
-# ОТСЛЕЖИВАТЬ ЗАПРОСЫ ПЛАНИРОВЩИКА
-pg_stat_statements.track_planning = on
-
-# СБОР СТАТИСТИКИ ПО СЛУЖЕБНЫМ ЗАПРОСАМ
-pg_stat_statements.track_utility = on
-
-# СБОР СТАТИСТИКИ ПО БЛОКАМ ВВОДА/ВЫВОДА
-pg_stat_statements.track_io_timing = on
-
-# СОХРАНЕНИЕ СТАТИСТИКИ ПРИ ПЕРЕЗАГРУЗКЕ СЕРВЕРА
-pg_stat_statements.save = on
+pg_stat_statements.max = 10000                       # МАКСИМАЛЬНОЕ КОЛИЧЕСТВО ОТСЛЕЖИВАЕМЫХ ЗАПРОСОВ
+pg_stat_statements.track = all                       # КАКИЕ ЗАПРОСЫ ОТСЛЕЖИВАТЬ (top | all | none)
+pg_stat_statements.track_planning = on               # ОТСЛЕЖИВАТЬ ЗАПРОСЫ ПЛАНИРОВЩИКА
+pg_stat_statements.track_utility = on                # СБОР СТАТИСТИКИ ПО СЛУЖЕБНЫМ ЗАПРОСАМ
+pg_stat_statements.track_io_timing = on              # СБОР СТАТИСТИКИ ПО БЛОКАМ ВВОДА/ВЫВОДА
+pg_stat_statements.save = on                         # СОХРАНЕНИЕ СТАТИСТИКИ ПРИ ПЕРЕЗАГРУЗКЕ СЕРВЕРА 
 
 # ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ ДЛЯ СТАТИСТИКИ
 track_io_timing = on

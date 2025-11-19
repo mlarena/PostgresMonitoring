@@ -1,0 +1,73 @@
+Основные конфигурационные файлы:
+
+1. postgresql.conf - ГЛАВНЫЙ конфигурационный файл
+
+# Содержит все основные настройки:
+- listen_addresses = 'localhost'    # Адреса прослушивания
+- port = 5432                       # Порт
+- max_connections = 100             # Максимальное число подключений
+- shared_buffers = 128MB            # Разделённая память
+- work_mem = 4MB                    # Память на операцию
+- logging_collector = on            # Логирование
+
+2. pg_hba.conf - Host-Based Authentication
+
+# Управляет аутентификацией и доступом:
+# TYPE  DATABASE  USER  ADDRESS     METHOD
+host    all       all   127.0.0.1/32 md5     # Локальные подключения
+host    all       all   ::1/128      md5     # IPv6
+local   all       all                peer    # Unix-сокеты
+
+Методы аутентификации:
+
+peer - аутентификация через OS пользователя
+md5 - парольная аутентификация
+trust - без аутентификации
+reject - запрет доступа
+
+3. pg_ident.conf - User Name Mapping
+
+# Сопоставление системных пользователей с пользователями PostgreSQL
+# MAPNAME  SYSTEM-USERNAME  PG-USERNAME
+mymap     os_user          pg_user
+
+
+Вспомогательные файлы:
+
+4. conf.d/ - Каталог дополнительных конфигов
+
+# Можно разбить конфигурацию на несколько файлов:
+- 01-memory.conf    # Настройки памяти
+- 02-network.conf   # Сетевые настройки
+- 03-logging.conf   # Настройки логирования
+Преимущество: Удобно управлять разными аспектами конфигурации отдельно
+
+5. pg_ctl.conf - Настройки утилиты pg_ctl
+
+# Параметры для pg_ctl (управление сервером):
+# -l, --log=FILENAME           файл лога
+# -o, --options=OPTIONS        опции командной строки
+
+6. start.conf - Управление автозапуском
+
+# Определяет поведение при загрузке системы:
+# auto   - автоматический запуск
+# manual - ручной запуск
+# disabled - отключён
+
+7. environment - Переменные окружения
+
+# Переменные окружения для PostgreSQL:
+# PGDATA=/var/lib/postgresql/18/main
+# PGPORT=5432
+
+Порядок чтения конфигурации:
+postgresql.conf - основные настройки
+Файлы из conf.d/ - дополнительные настройки (в алфавитном порядке)
+pg_hba.conf - правила доступа
+pg_ident.conf - сопоставление пользователей
+
+sudo -u postgres psql -c "SHOW ALL;"
+
+Чтобы прочитать только те параметры в файле /etc/postgresql/18/main/postgresql.conf, которые начинаются на log_
+sudo grep -E '^[\s]*log_' /etc/postgresql/18/main/postgresql.conf

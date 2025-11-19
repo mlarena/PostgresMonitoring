@@ -1,0 +1,57 @@
+# Основной конфигурационный файл
+sudo -u postgres psql -c "SHOW config_file;"
+
+# Файл аутентификации (pg_hba.conf)
+sudo -u postgres psql -c "SHOW hba_file;"
+
+# Каталог с конфигурацией
+sudo find /etc -name "postgresql.conf" -type f
+ls -la /etc/postgresql/18/main/
+
+
+# Показать весь конфиг
+sudo cat /etc/postgresql/18/main/postgresql.conf
+
+# Показать с подсветкой
+sudo less /etc/postgresql/18/main/postgresql.conf
+
+# Поиск конкретных параметров
+sudo grep -E "^(listen_addresses|port|max_connections)" /etc/postgresql/18/main/postgresql.conf
+
+# Показать текущие настройки в БД
+sudo -u postgres psql -c "SHOW ALL;" | grep -E "(listen_addresses|port|max_connections)"
+
+# Перезагрузка конфигурации (без перезапуска службы)
+sudo -u postgres psql -c "SELECT pg_reload_conf();"
+
+# Полный перезапуск службы
+sudo systemctl restart postgresql@18-main
+
+# Проверка статуса
+sudo systemctl status postgresql@18-main
+
+
+SHOW log_destination;
+SHOW logging_collector;
+SHOW log_directory;
+SHOW log_filename;
+
+
+# Смотрите последние записи
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log
+/var/lib/postgresql/18/main/log/postgresql
+
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep -E "(connection|disconnection)"
+
+# Только SQL запросы
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep "statement:"
+
+# Только ошибки
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep -E "(ERROR|FATAL)"
+
+# Только медленные запросы
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep "duration:"
+
+# Только конкретная база данных
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep "db=your_database_name"
+

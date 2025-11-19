@@ -39,12 +39,14 @@ SHOW log_filename;
 
 # Смотрите последние записи
 sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.json
+
 /var/lib/postgresql/18/main/log/postgresql
 
 sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep -E "(connection|disconnection)"
 
 # Только SQL запросы
-sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep "statement:"
+sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.json | grep "statement:"
 
 # Только ошибки
 sudo tail -f /var/lib/postgresql/18/main/log/postgresql-*.log | grep -E "(ERROR|FATAL)"
